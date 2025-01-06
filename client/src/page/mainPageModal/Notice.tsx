@@ -39,11 +39,8 @@ const Notice: React.FC<ModalProps> = ({ isOpen, closeModal }) => {
         <hr />
         <p className="text-[#0F2041] text-xl font-roboto font-extrabold">
           안녕하세요 저는 이 프로그램의 개발자입니다. 본 서비스는 약 1년간 운영될
-          예정입니다. 유지하는 비용(도메인,서버) 1인으로 관리하는 개인 프로젝트인
-          만큼 이 기간 동안 계속 업데이트하고 유지 관리하겠습니다. 1년 후에는
-          피드백을 바탕으로 서비스를 개선하고 더욱 탄탄한 솔루션을 제공할
-          계획입니다.
-        </p>
+          예정입니다.(유지비용 이슈) 개발자 2명이서 관리할 예정입니다. 운영기간
+          동안 계속 업데이트하고 유지 관리하겠습니다. </p>
         <br></br>
         <p className="text-[#0F2041] text-xl font-roboto font-extrabold">
           본 프로그램은 사용자 편의성을 염두에 두고 설계되었으나 일부 ​​제한
