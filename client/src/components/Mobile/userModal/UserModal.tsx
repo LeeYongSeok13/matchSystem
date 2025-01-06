@@ -1,12 +1,10 @@
 import { User } from "../../../commonTypes";
-import React, { useState } from "react";
 import reload from "../../../assets/reload.png";
 import trash from "../../../assets/trashbin.png";
 import apiCall from "../../../Api/Api";
 import { Link } from "react-router-dom";
 import { AxiosError } from "axios";
 import Swal from "sweetalert2";
-import LoadingModal from "../../Profile/Loging";
 interface Props {
   user: User;
   setUserModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -20,10 +18,8 @@ const UserModal = ({
   setIsUserAdded,
   handleDeleteUser,
 }: Props) => {
-  const [isLoading, setIsLoading] = useState(false); // 로딩 상태 추가
   const reloadInfo = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation(); // 이벤트 전파 막기
-    setIsLoading(true);
     const data = {
       user_id: user.updateId,
     };
@@ -33,6 +29,7 @@ const UserModal = ({
         // 비동기 함수 내에서 await 사용
         await apiCall("/noobs/friendUserBrUpdate", "post", data);
         setUserModal(false); // 모달 닫기
+       
         Swal.fire({
           icon: "success",
           text: "전적 정보 업데이트 완료되었습니다.",
@@ -64,9 +61,7 @@ const UserModal = ({
             showConfirmButton: true,
           });
         }
-      } finally {
-        setIsLoading(false);
-      }
+      } 
     };
 
     // updateUser 호출
@@ -113,7 +108,6 @@ const UserModal = ({
       >
         <img src={reload} alt="reloadImg" className="w-[16px] h-[16px]" />
         <p className="text-red">전적 갱신하기</p>
-        {isLoading && <LoadingModal message="정보를 업데이트 중입니다..." />}
       </div>
   
       <div

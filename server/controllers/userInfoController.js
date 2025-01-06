@@ -227,21 +227,45 @@ const friendUserBrUpdate = async (req, res) => {
       },
     });
 
+  
     if (!userInfo) {
       return res.status(404).json({ message: "사용자가 존재하지 않습니다." });
     }
 
-    // 갱신 시간 막아주기
-    const currentTimeKST = moment().tz("Asia/Seoul");
-    const lastUpdatedAt = moment(userInfo.updatedAt);
-    const diffInMinutes = currentTimeKST.diff(lastUpdatedAt, "minutes");
 
-    if (diffInMinutes < 5) {
-      // 5분 이내라면, 업데이트 차단하고 응답
-      return res.status(400).json({
-        message: `${5 - diffInMinutes}분 후 다시 요청해주세요.`,
-      });
+    const createAt = userInfo.createdAt;
+    const updateAt = userInfo.updatedAt;
+
+    // cretae 와 update 시간이 같으면 허용 
+
+    if(createAt.getTime() === updateAt.getTime()) {
+      // userInfo 테이블의 update 시간을 현재 시간으로 변경해서 테이블 업데이트
+      try {
+        await NoobsUserInfo.update({
+          
+           updateAt: new Date() }, // 업데이트할 데이터
+            { where : { id : user_id } ,
+
+        });
+  
+      } catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: "서버 오류로 업데이트에 실패했습니다." });
+      }
+    }else {
+          // 갱신 시간 막아주기
+      const currentTimeKST = moment().tz("Asia/Seoul");
+      const lastUpdatedAt = moment(userInfo.updatedAt);
+      const diffInMinutes = currentTimeKST.diff(lastUpdatedAt, "minutes");
+
+      if (diffInMinutes < 5) {
+        // 5분 이내라면, 업데이트 차단하고 응답
+        return res.status(400).json({
+          message: `${5 - diffInMinutes}분 후 다시 요청해주세요.`,
+        });
+      }
     }
+ 
 
     const userPuuid = userInfo.puuid;
 

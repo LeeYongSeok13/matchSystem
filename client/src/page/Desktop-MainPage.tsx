@@ -4,6 +4,7 @@ import Menu from "../components/Desktop/Menu";
 import { User } from "../commonTypes";
 import ComposeButton from "../components/Desktop/ComposeButton";
 
+
 interface DesktopMainPageProps {
   allUsers: User[];
   redTeam: User[];
@@ -55,11 +56,13 @@ const DesktopMainPage: React.FC<DesktopMainPageProps> = ({
   rankDiff,
   userCount,
 }) => {
+
   const handleFinishDraft = (RedTeam: User[], BlueTeam: User[]) => {
     // 상태 업데이트: 최종 팀을 메인 페이지에 반영
     setRedTeam(RedTeam);
     setBlueTeam(BlueTeam);
   };
+
   return (
     <div className="w-[100vw] xs:h-[100%] lg:h-[100vh]">
       <Header text={headerText} />
