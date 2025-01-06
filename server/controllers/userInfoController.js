@@ -73,8 +73,6 @@ const userSearch = async (req, res) => {
 
     // 2. 사용자 정보 API 요청
     const accountUrl = `https://asia.api.riotgames.com/riot/account/v1/accounts/by-riot-id/${encodeURIComponent(userid)}/${encodeURIComponent(tagLine)}`;
-    console.log(accountUrl);
-    
     const accountResponse = await axios.get(accountUrl, { headers });
     const { puuid, gameName, tagLine: retrievedTagLine } = accountResponse.data;
 
